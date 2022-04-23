@@ -20,36 +20,33 @@ const db = mysql.createConnection(
 
 // Queries database to show all of the departments.
 app.get("/api/departments", (req, res) => {
-    db.query("SELECT * FROM departments", function (err, results) {
-        if (err) throw err;
-        else {
-            res.json(results);
-        }
-    });
+  db.query("SELECT * FROM departments", function (err, results) {
+    if (err) throw err;
+    else {
+      res.json(results);
+    }
+  });
 });
 
 // Queries database to show all of the roles.
 app.get("/api/roles", (req, res) => {
-    db.query("SELECT * FROM roles", function (err, results) {
-        if (err) throw err;
-        else {
-            res.json(results);
-        }
-    });
+  db.query("SELECT * FROM roles", function (err, results) {
+    if (err) throw err;
+    else {
+      res.json(results);
+    }
+  });
 });
 
 // Queries database to show all of the employees.
 app.get("/api/employees", (req, res) => {
-    db.query("SELECT * FROM employees", function (err, results) {
-        if (err) throw err;
-        else {
-            res.json(results);
-        }
-    });
+  db.query("SELECT * FROM employees", function (err, results) {
+    if (err) throw err;
+    else {
+      res.json(results);
+    }
+  });
 });
-
-
-
 
 // Returns 404 for a query failure.
 app.use((req, res) => {
@@ -58,5 +55,5 @@ app.use((req, res) => {
 
 // Tells server to listen on our defined PORT
 app.listen(PORT, () => {
-    console.log(`server listening at http://localhost:${PORT}`);
+  console.log(`server listening at http://localhost:${PORT}`);
 });

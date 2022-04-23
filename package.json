@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "employeetracker",
+  "description": "An employee management application that allows users to view and manage employees, departments, and roles within their company.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewmoody96/employeetracker.git"
+  },
+  "author": "Andrew Moody",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewmoody96/employeetracker/issues"
+  },
+  "homepage": "https://github.com/andrewmoody96/employeetracker#readme"
+}
