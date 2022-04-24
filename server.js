@@ -1,6 +1,5 @@
 const express = require("express");
 const mysql = require("mysql2");
-const inquirer = require("inquirer");
 const app = express();
 const dotenv = require("dotenv").config();
 
@@ -16,5 +15,7 @@ const db = mysql.createConnection(
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
   },
-  console.log("Connected to the employees_db database.")
+  console.log("Connected to the team_db database.")
 );
+
+module.exports = db;
