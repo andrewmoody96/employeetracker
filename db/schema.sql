@@ -22,11 +22,12 @@ CREATE TABLE employees (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(30) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
-    -- need to setup foreign key to reference roles table
+   
     position VARCHAR(50) NOT NULL,
-    -- need to setup foreign keys to reference department table
+   
     FOREIGN KEY (department)
-    REFERENCES (roles.department),
+    REFERENCES (roles.department)
+
     FOREIGN KEY (salary)
     REFERENCES (roles.salary),
     manager VARCHAR(30)

@@ -1,0 +1,26 @@
+{
+  "name": "employeetracker",
+  "version": "1.0.0",
+  "description": "App to manage employees.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "inquirer": "^8.2.2",
+    "console.table": "^0.10.0"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewmoody96/employeetracker.git"
+  },
+  "author": "Andrew Moody",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewmoody96/employeetracker/issues"
+  }
+}
