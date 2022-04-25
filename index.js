@@ -20,24 +20,25 @@ const questions = [
 function businessManager() {
   inquirer.prompt(questions).then((answers) => {
     if (answers.whatFirst === "View All Departments") {
-      //query to see table of departments
-      db.query("SELECT * FROM departments", function (err, results) {
+      //query to see all departments
+      db.query(`SELECT * FROM departments`, function (err, results) {
         console.log("");
         console.table(results);
       });
 
       businessManager();
     } else if (answers.whatFirst === "View All Roles") {
-      //query to see table of roles
-      db.query("SELECT * FROM roles", function (err, results) {
+      //query to see all roles -- TODO -- import data from other tables via a JOIN
+    //   'SELECT role.id, role.title, role.salary, department.department_name FROM role JOIN department ON department.id = role.department_id'
+      db.query(`SELECT roles.id, roles.title, roles.salary, departments.name FROM roles JOIN departments ON departments.id = roles.department_id`, function (err, results) {
         console.log("");
         console.table(results);
       });
 
       businessManager();
     } else if (answers.whatFirst === "View All Employees") {
-      //query to see table of employees
-      db.query("SELECT * FROM employees", function (err, results) {
+      //query to see all employees -- TODO -- import data from other tables via a JOIN
+      db.query(`SELECT * FROM employees`, function (err, results) {
         console.log("");
         console.table(results);
       });
@@ -179,7 +180,7 @@ function businessManager() {
       //   );
       //   businessManager();
     } else {
-      //Stop program
+      // Kills application
       console.log("Goodbye!");
       process.exit(1);
     }
