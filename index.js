@@ -187,7 +187,7 @@ function businessManager() {
     //   businessManager();
     } else {
       //Stop program
-      console.log("Edit Complete");
+      console.log("Operation completed.");
       process.exit(1);
     }
   });
@@ -195,10 +195,10 @@ function businessManager() {
 
 // Starts application and provides a way to quit as well.
 function runApp() {
-  inquirer.prompt(firstQuestion).then((answers) => {
+  inquirer.prompt(questions).then((answers) => {
     if (answers.whatFirst === "Exit Application") {
       console.log("Goodbye!");
-      return;
+      process.exit(1)
     } else {
         businessManager();
     }
