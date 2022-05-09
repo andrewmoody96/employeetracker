@@ -49,11 +49,11 @@ function businessManager() {
       businessManager();
     } else if (answers.whatFirst === "View All Roles") {
       //query to see all roles -- TODO -- import data from other tables via a JOIN
-      //   'SELECT role.id, role.title, role.salary, department.department_name FROM role JOIN department ON department.id = role.department_id'
+      //   'SELECT roles.id, roles.title, roles.salary, departments.department_name FROM role JOIN department ON departments.id = roles.department_id'
 
       //  JOIN departments ON departments.id = roles.department_id
       db.query(
-        `SELECT roles.id, roles.title, roles.salary, departments.department_name FROM roles JOIN departments ON roles.department_id=departments.id`,
+        `SELECT roles.id, roles.title, roles.salary, departments.department_name FROM roles JOIN departments ON departments.id = roles.department_id`,
         function (err, results) {
           console.log("");
           console.table(results);
@@ -93,7 +93,7 @@ function businessManager() {
       //     }
       //   );
       //   db.query(
-      //     "SELECT role.id, role.title, role.salary, department.department_name FROM role JOIN department ON department.id = role.department_id",
+      //     "SELECT roles.id, roles.title, roles.salary, departments.department_name FROM role JOIN department ON departments.id = roles.department_id",
       //     function (err, results) {
       //       console.log("");
       //       console.table(results);
@@ -111,7 +111,7 @@ function businessManager() {
       //     }
       //   );
       //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, role.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON role.id = employee.role_id",
+      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
       //     function (err, results) {
       //       console.log("");
       //       console.table(results);
@@ -131,7 +131,7 @@ function businessManager() {
       //     }
       //   );
       //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, role.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON role.id = employee.role_id",
+      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
       //     function (err, results) {
       //       console.log("");
       //       console.table(results);
@@ -151,7 +151,7 @@ function businessManager() {
       //     }
       //   );
       //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, role.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON role.id = employee.role_id",
+      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
       //     function (err, results) {
       //       console.log("");
       //       console.table(results);
@@ -181,7 +181,7 @@ function businessManager() {
       //     }
       //   );
       //   db.query(
-      //     "SELECT role.id, role.title, role.salary, department.department_name FROM role JOIN department ON department.id = role.department_id",
+      //     "SELECT roles.id, roles.title, roles.salary, departments.department_name FROM role JOIN department ON departments.id = roles.department_id",
       //     function (err, results) {
       //       console.log("");
       //       console.table(results);
@@ -197,7 +197,7 @@ function businessManager() {
       //     }
       //   );
       //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, role.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON role.id = employee.role_id",
+      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
       //     function (err, results) {
       //       console.log("");
       //       console.table(results);
