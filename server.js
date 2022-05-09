@@ -91,7 +91,7 @@ const questions = [
   {
     type: "input",
     name: "employeeRole",
-    message: "Enter the title of this employee's role",
+    message: "Enter the role ID for this employee.",
     when(answers) {
       return answers.whatFirst === "Add an Employee";
     },
