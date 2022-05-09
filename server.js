@@ -19,6 +19,8 @@ const questions = [
       "Delete a Department",
       "Add a Role",
       "Delete a Role",
+      "Add an Employee",
+      "Delete an Employee",
       "Exit Application",
     ],
   },
@@ -68,6 +70,39 @@ const questions = [
     message: "Enter the name of the role you would you like to delete.",
     when(answers) {
       return answers.whatFirst === "Delete a Role";
+    },
+  },
+  {
+    type: "input",
+    name: "employeeLastName",
+    message: "Enter the employee's last name.",
+    when(answers) {
+      return answers.whatFirst === "Add an Employee";
+    },
+  },
+  {
+    type: "input",
+    name: "employeeFirstName",
+    message: "Enter the employee's first name.",
+    when(answers) {
+      return answers.whatFirst === "Add an Employee";
+    },
+  },
+  {
+    type: "input",
+    name: "employeeRole",
+    message: "Enter the title of this employee's role",
+    when(answers) {
+      return answers.whatFirst === "Add an Employee";
+    },
+  },
+  {
+    type: "input",
+    name: "employeeManager",
+    message: "Who is this employee's manager? -- Select 'null' if this employee is a manager.",
+    default: null,
+    when(answers) {
+      return answers.whatFirst === "Add an Employee";
     },
   },
 ];
@@ -150,7 +185,7 @@ function businessManager() {
         `INSERT INTO roles (title, salary, department_id) VALUES ('${answers.roleTitle}', ${answers.roleSalary}, ${answers.roleDepartment})`,
         function (err, results) {
           console.log("");
-          console.log("Adding New Department");
+          console.log("Adding New Role");
         }
       );
       db.query(
@@ -180,14 +215,14 @@ function businessManager() {
     } else if (answers.whatFirst === "Add an Employee") {
       //something
       db.query(
-        `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answers.addEmployeeFname}', '${answers.addEmployeeLname}', ${answers.addEmployeeRole}, ${answers.addEmployeeManager})`,
+        `INSERT INTO employees (last_name, first_name, role_id, manager) VALUES ('${answers.employeeLastName}', '${answers.employeeFirstName}', ${answers.employeeRole}, ${answers.employeeManager})`,
         function (err, results) {
           console.log("");
-          console.log("Adding New Department");
+          console.log("Adding New Employee");
         }
       );
       db.query(
-        "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
+        "SELECT employees.id, employees.last_name, employees.first_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employees employees LEFT OUTER JOIN employees manager ON employees.manager = manager.id JOIN roles ON roles.id = employees.role_id",
         function (err, results) {
           console.log("");
           console.table(results);
@@ -195,46 +230,46 @@ function businessManager() {
       );
 
       businessManager();
-    } else if (answers.whatFirst === "Update an Employee Role") {
-      //something
-      db.query(
-        `UPDATE employee SET role_id = '${answers.updateEmployeeRole}' WHERE id = '${answers.updateEmployee}'`,
-        function (err, results) {
-          console.log("");
-          console.log(
-            `Employee ID: ${answers.updateEmployee} has been updated to Role ID: ${answers.updateEmployeeRole}`
-          );
-        }
-      );
-      db.query(
-        "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-        function (err, results) {
-          console.log("");
-          console.table(results);
-        }
-      );
+    // } else if (answers.whatFirst === "Update an Employee Role") {
+    //   //something
+    //   db.query(
+    //     `UPDATE employee SET role_id = '${answers.updateEmployeeRole}' WHERE id = '${answers.updateEmployee}'`,
+    //     function (err, results) {
+    //       console.log("");
+    //       console.log(
+    //         `Employee ID: ${answers.updateEmployee} has been updated to Role ID: ${answers.updateEmployeeRole}`
+    //       );
+    //     }
+    //   );
+    //   db.query(
+    //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
+    //     function (err, results) {
+    //       console.log("");
+    //       console.table(results);
+    //     }
+    //   );
 
-      businessManager();
-    } else if (answers.whatFirst === "Update an Employee Manager") {
-      //something
-      db.query(
-        `UPDATE employee SET manager_id = '${answers.updateEmployeeManager}' WHERE id = '${answers.updateManagerofEmployeeID}'`,
-        function (err, results) {
-          console.log("");
-          console.log(
-            `Employee ID: ${answers.updateManagerofEmployeeID} has been updated to Role ID: ${answers.updateEmployeeManager}`
-          );
-        }
-      );
-      db.query(
-        "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-        function (err, results) {
-          console.log("");
-          console.table(results);
-        }
-      );
+    //   businessManager();
+    // } else if (answers.whatFirst === "Update an Employee Manager") {
+    //   //something
+    //   db.query(
+    //     `UPDATE employee SET manager_id = '${answers.updateEmployeeManager}' WHERE id = '${answers.updateManagerofEmployeeID}'`,
+    //     function (err, results) {
+    //       console.log("");
+    //       console.log(
+    //         `Employee ID: ${answers.updateManagerofEmployeeID} has been updated to Role ID: ${answers.updateEmployeeManager}`
+    //       );
+    //     }
+    //   );
+    //   db.query(
+    //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
+    //     function (err, results) {
+    //       console.log("");
+    //       console.table(results);
+    //     }
+    //   );
 
-      businessManager();
+    //   businessManager();
     } else {
       // Kills application
       console.log("Goodbye!");
