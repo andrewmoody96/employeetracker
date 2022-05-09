@@ -15,8 +15,26 @@ const questions = [
       "View All Departments",
       "View All Roles",
       "View All Employees",
+      "Add a Department",
+      "Delete a Department",
       "Exit Application",
     ],
+  },
+  {
+    type: "input",
+    name: "addDepartment",
+    message: "Enter the name of the department.",
+    when(answers) {
+      return answers.whatFirst === "Add a Department";
+    },
+  },
+  {
+    type: "input",
+    name: "deleteDepartment",
+    message: "Enter the name of the department you would you like to delete.",
+    when(answers) {
+      return answers.whatFirst === "Delete a Department";
+    },
   },
 ];
 
@@ -48,10 +66,7 @@ function businessManager() {
 
       businessManager();
     } else if (answers.whatFirst === "View All Roles") {
-      //query to see all roles -- TODO -- import data from other tables via a JOIN
-      //   'SELECT roles.id, roles.title, roles.salary, departments.department_name FROM role JOIN department ON departments.id = roles.department_id'
-
-      //  JOIN departments ON departments.id = roles.department_id
+      // query to see all roles
       db.query(
         `SELECT roles.id, roles.title, roles.salary, departments.department_name FROM roles JOIN departments ON departments.id = roles.department_id`,
         function (err, results) {
@@ -68,21 +83,34 @@ function businessManager() {
         console.table(results);
       });
       businessManager();
-      // } else if (answers.whatFirst === "Add a Department") {
-      //   //something
-      //   db.query(
-      //     `INSERT INTO department (department_name) VALUES ('${answers.addDepartment}')`,
-      //     function (err, results) {
-      //       console.log("");
-      //       console.log("Adding New Department");
-      //     }
-      //   );
-      //   db.query("SELECT * FROM department", function (err, results) {
-      //     console.log("");
-      //     console.table(results);
-      //   });
-      //
-      //   businessManager();
+    } else if (answers.whatFirst === "Add a Department") {
+      db.query(
+        `INSERT INTO departments (department_name) VALUES ('${answers.addDepartment}')`,
+        function (err, results) {
+          console.log("");
+          console.log("Adding New Department");
+        }
+      );
+      db.query("SELECT * FROM departments", function (err, results) {
+        console.log("");
+        console.table(results);
+      });
+      businessManager();
+    } else if (answers.whatFirst === "Delete a Department") {
+      db.query(
+        `DELETE FROM departments WHERE department_name = ('${answers.deleteDepartment}')`,
+        function (err, results) {
+          console.log("");
+          console.log(
+            `Department: ${answers.deleteDepartment} has been deleted.`
+          );
+        }
+      );
+      db.query("SELECT * FROM departments", function (err, results) {
+        console.log("");
+        console.table(results);
+      });
+      businessManager();
       // } else if (answers.whatFirst === "Add a Role") {
       //   //something
       //   db.query(
@@ -99,7 +127,7 @@ function businessManager() {
       //       console.table(results);
       //     }
       //   );
-      //
+
       //   businessManager();
       // } else if (answers.whatFirst === "Add an Employee") {
       //   //something
@@ -117,7 +145,7 @@ function businessManager() {
       //       console.table(results);
       //     }
       //   );
-      //
+
       //   businessManager();
       // } else if (answers.whatFirst === "Update an Employee Role") {
       //   //something
@@ -137,7 +165,7 @@ function businessManager() {
       //       console.table(results);
       //     }
       //   );
-      //
+
       //   businessManager();
       // } else if (answers.whatFirst === "Update an Employee Manager") {
       //   //something
@@ -157,53 +185,9 @@ function businessManager() {
       //       console.table(results);
       //     }
       //   );
-      //
+
       //   businessManager();
-      // } else if (answers.whatFirst === "Delete a Department") {
-      //   db.query(
-      //     `DELETE FROM department WHERE id = '${answers.deleteDepartment}'`,
-      //     function (err, results) {
-      //       console.log("");
-      //       console.log("Deleteing a Department");
-      //     }
-      //   );
-      //   db.query("SELECT * FROM department", function (err, results) {
-      //     console.log("");
-      //     console.table(results);
-      //   });
-      //   businessManager();
-      // } else if (answers.whatFirst === "Delete a Role") {
-      //   db.query(
-      //     `DELETE FROM role WHERE id ='${answers.deleteRole}'`,
-      //     function (err, results) {
-      //       console.log("");
-      //       console.log("Deleteing a Role");
-      //     }
-      //   );
-      //   db.query(
-      //     "SELECT roles.id, roles.title, roles.salary, departments.department_name FROM role JOIN department ON departments.id = roles.department_id",
-      //     function (err, results) {
-      //       console.log("");
-      //       console.table(results);
-      //     }
-      //   );
-      //   businessManager();
-      // } else if (answers.whatFirst === "Delete an Employee") {
-      //   db.query(
-      //     `DELETE FROM employee WHERE id = '${answers.deleteEmployee}'`,
-      //     function (err, results) {
-      //       console.log("");
-      //       console.log("Deleteing an Employee");
-      //     }
-      //   );
-      //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-      //     function (err, results) {
-      //       console.log("");
-      //       console.table(results);
-      //     }
-      //   );
-      //   businessManager();
+      // }
     } else {
       // Kills application
       console.log("Goodbye!");
