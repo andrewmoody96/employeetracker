@@ -99,10 +99,20 @@ const questions = [
   {
     type: "input",
     name: "employeeManager",
-    message: "Who is this employee's manager? -- Select 'null' if this employee is a manager.",
+    message:
+      "Who is this employee's manager? -- Select 'null' if this employee is a manager.",
     default: null,
     when(answers) {
       return answers.whatFirst === "Add an Employee";
+    },
+  },
+  {
+    type: "input",
+    name: "deleteEmployee",
+    message: "Enter the ID of the employee you would like to remove.",
+    default: null,
+    when(answers) {
+      return answers.whatFirst === "Delete an Employee";
     },
   },
 ];
@@ -202,9 +212,7 @@ function businessManager() {
         `DELETE FROM roles WHERE title = ('${answers.deleteRole}')`,
         function (err, results) {
           console.log("");
-          console.log(
-            `Department: ${answers.deleteRole} has been deleted.`
-          );
+          console.log(`Department: ${answers.deleteRole} has been deleted.`);
         }
       );
       db.query("SELECT * FROM roles", function (err, results) {
@@ -228,48 +236,64 @@ function businessManager() {
           console.table(results);
         }
       );
-
       businessManager();
-    // } else if (answers.whatFirst === "Update an Employee Role") {
-    //   //something
-    //   db.query(
-    //     `UPDATE employee SET role_id = '${answers.updateEmployeeRole}' WHERE id = '${answers.updateEmployee}'`,
-    //     function (err, results) {
-    //       console.log("");
-    //       console.log(
-    //         `Employee ID: ${answers.updateEmployee} has been updated to Role ID: ${answers.updateEmployeeRole}`
-    //       );
-    //     }
-    //   );
-    //   db.query(
-    //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-    //     function (err, results) {
-    //       console.log("");
-    //       console.table(results);
-    //     }
-    //   );
+    } else if (answers.whatFirst === "Delete an Employee") {
+      //something
+      db.query(
+        `DELETE FROM employees WHERE id = ${answers.deleteEmployee}`,
+        function (err, results) {
+          console.log("");
+          console.log(`Employee with ID: ${answers.deleteEmployee} has been deleted.`);
+        }
+      );
+      db.query(
+        "SELECT * FROM employees",
+        function (err, results) {
+          console.log("");
+          console.table(results);
+        }
+      );
+      businessManager();
+      // } else if (answers.whatFirst === "Update an Employee Role") {
+      //   //something
+      //   db.query(
+      //     `UPDATE employee SET role_id = '${answers.updateEmployeeRole}' WHERE id = '${answers.updateEmployee}'`,
+      //     function (err, results) {
+      //       console.log("");
+      //       console.log(
+      //         `Employee ID: ${answers.updateEmployee} has been updated to Role ID: ${answers.updateEmployeeRole}`
+      //       );
+      //     }
+      //   );
+      //   db.query(
+      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
+      //     function (err, results) {
+      //       console.log("");
+      //       console.table(results);
+      //     }
+      //   );
 
-    //   businessManager();
-    // } else if (answers.whatFirst === "Update an Employee Manager") {
-    //   //something
-    //   db.query(
-    //     `UPDATE employee SET manager_id = '${answers.updateEmployeeManager}' WHERE id = '${answers.updateManagerofEmployeeID}'`,
-    //     function (err, results) {
-    //       console.log("");
-    //       console.log(
-    //         `Employee ID: ${answers.updateManagerofEmployeeID} has been updated to Role ID: ${answers.updateEmployeeManager}`
-    //       );
-    //     }
-    //   );
-    //   db.query(
-    //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-    //     function (err, results) {
-    //       console.log("");
-    //       console.table(results);
-    //     }
-    //   );
+      //   businessManager();
+      // } else if (answers.whatFirst === "Update an Employee Manager") {
+      //   //something
+      //   db.query(
+      //     `UPDATE employee SET manager_id = '${answers.updateEmployeeManager}' WHERE id = '${answers.updateManagerofEmployeeID}'`,
+      //     function (err, results) {
+      //       console.log("");
+      //       console.log(
+      //         `Employee ID: ${answers.updateManagerofEmployeeID} has been updated to Role ID: ${answers.updateEmployeeManager}`
+      //       );
+      //     }
+      //   );
+      //   db.query(
+      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
+      //     function (err, results) {
+      //       console.log("");
+      //       console.table(results);
+      //     }
+      //   );
 
-    //   businessManager();
+      //   businessManager();
     } else {
       // Kills application
       console.log("Goodbye!");
