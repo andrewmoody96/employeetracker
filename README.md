@@ -28,7 +28,7 @@ Run 'npm start'. You will be presented with options to view, add, and delete dep
 
 #### Video Demo
 
-Click <a href="https://drive.google.com/file/d/1XU9b-tgo6K4wP5kXNJuzVT6qzSF_V4ts/view?usp=sharing" target="_blank">here</a> for a video demo.
+Click <a href="https://drive.google.com/file/d/1XU9b-tgo6K4wP5kXNJuzVT6qzSF_V4ts/view?usp=sharing/" target="_blank">here</a> for a video demo.
 
 <!-- [here](https://drive.google.com/file/d/1XU9b-tgo6K4wP5kXNJuzVT6qzSF_V4ts/view?usp=sharing) -->
 ---
