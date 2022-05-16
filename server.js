@@ -5,6 +5,7 @@ const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const inquirer = require("inquirer");
 const { kill } = require("nodemon/lib/monitor/run");
+const cTable = require('console.table');
 const questions = [
   {
     type: "list",
@@ -21,6 +22,8 @@ const questions = [
       "Delete a Role",
       "Add an Employee",
       "Delete an Employee",
+      "Update Employee Role",
+      "Update Employee Manager",
       "Exit Application",
     ],
   },
@@ -113,6 +116,39 @@ const questions = [
     default: null,
     when(answers) {
       return answers.whatFirst === "Delete an Employee";
+    },
+  },
+  {
+    type: "input",
+    name: "updateEmployee",
+    message: "What is the ID of the Employee being updated",
+    when(answers) {
+      return answers.whatFirst === "Update Employee Role";
+    },
+  },
+  {
+    type: "input",
+    name: "updateEmployeeRole",
+    message: "What is the ID of the new role of the Employee",
+    when(answers) {
+      return answers.whatFirst === "Update Employee Role";
+    },
+  },
+  {
+    type: "input",
+    name: "updateManagerEmployeeID",
+    message: "What is the ID of the Employee being updated",
+    when(answers) {
+      return answers.whatFirst === "Update Employee Manager";
+    },
+  },
+  {
+    type: "input",
+    name: "updateEmployeeManager",
+    message:
+      "What is the ID of the new manager of the Employee, enter 0 for no manager",
+    when(answers) {
+      return answers.whatFirst === "Update Employee Manager";
     },
   },
 ];
@@ -243,57 +279,56 @@ function businessManager() {
         `DELETE FROM employees WHERE id = ${answers.deleteEmployee}`,
         function (err, results) {
           console.log("");
-          console.log(`Employee with ID: ${answers.deleteEmployee} has been deleted.`);
+          console.log(
+            `Employee with ID: ${answers.deleteEmployee} has been deleted.`
+          );
+        }
+      );
+      db.query("SELECT * FROM employees", function (err, results) {
+        console.log("");
+        console.table(results);
+      });
+      businessManager();
+    } else if (answers.whatFirst === "Update Employee Role") {
+      //something
+      db.query(
+        `UPDATE employees SET role_id = '${answers.updateEmployeeRole}'' WHERE id = '${answers.updateEmployee}'`,
+        function (err, results) {
+          console.log("");
+          console.log(
+            `Employee ID: ${answers.updateEmployee} has been updated to Role ID: ${answers.updateEmployeeRole}`
+          );
         }
       );
       db.query(
-        "SELECT * FROM employees",
+        "SELECT employees.id, employees.last_name, employees.first_name, roles.title, manager.last_name AS manager_last_name, manager.first_name AS manager_first_name FROM employees employees LEFT OUTER JOIN employees manager ON employees.manager = manager.id JOIN roles ON roles.id = employees.role_id",
         function (err, results) {
           console.log("");
           console.table(results);
         }
       );
+
       businessManager();
-      // } else if (answers.whatFirst === "Update an Employee Role") {
-      //   //something
-      //   db.query(
-      //     `UPDATE employee SET role_id = '${answers.updateEmployeeRole}' WHERE id = '${answers.updateEmployee}'`,
-      //     function (err, results) {
-      //       console.log("");
-      //       console.log(
-      //         `Employee ID: ${answers.updateEmployee} has been updated to Role ID: ${answers.updateEmployeeRole}`
-      //       );
-      //     }
-      //   );
-      //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-      //     function (err, results) {
-      //       console.log("");
-      //       console.table(results);
-      //     }
-      //   );
+      } else if (answers.whatFirst === "Update Employee Manager") {
+        //something
+        db.query(
+          `UPDATE employees SET manager = '${answers.updateEmployeeManager}' WHERE id = '${answers.updateManagerEmployeeID}'`,
+          function (err, results) {
+            console.log("");
+            console.log(
+              `Employee ID: ${answers.updateManagerEmployeeID} has been updated to Role ID: ${answers.updateEmployeeManager}`
+            );
+          }
+        );
+        db.query(
+          "SELECT employees.id, employees.last_name, employees.first_name, roles.title, manager.last_name AS manager__name, manager.first_name AS manager_first_name FROM employees employees LEFT OUTER JOIN employees manager ON employees.manager = manager.id JOIN roles ON roles.id = employees.role_id",
+          function (err, results) {
+            console.log("");
+            console.table(results);
+          }
+        );
 
-      //   businessManager();
-      // } else if (answers.whatFirst === "Update an Employee Manager") {
-      //   //something
-      //   db.query(
-      //     `UPDATE employee SET manager_id = '${answers.updateEmployeeManager}' WHERE id = '${answers.updateManagerofEmployeeID}'`,
-      //     function (err, results) {
-      //       console.log("");
-      //       console.log(
-      //         `Employee ID: ${answers.updateManagerofEmployeeID} has been updated to Role ID: ${answers.updateEmployeeManager}`
-      //       );
-      //     }
-      //   );
-      //   db.query(
-      //     "SELECT employee.Id, employee.first_name, employee.last_name, roles.title, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee employee LEFT OUTER JOIN employee manager ON employee.manager_id = manager.id JOIN role ON roles.id = employee.role_id",
-      //     function (err, results) {
-      //       console.log("");
-      //       console.table(results);
-      //     }
-      //   );
-
-      //   businessManager();
+        businessManager();
     } else {
       // Kills application
       console.log("Goodbye!");
