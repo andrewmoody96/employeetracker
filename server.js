@@ -5,7 +5,6 @@ const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const inquirer = require("inquirer");
 const { kill } = require("nodemon/lib/monitor/run");
-const cTable = require('console.table');
 const questions = [
   {
     type: "list",
@@ -248,7 +247,7 @@ function businessManager() {
         `DELETE FROM roles WHERE title = ('${answers.deleteRole}')`,
         function (err, results) {
           console.log("");
-          console.log(`Department: ${answers.deleteRole} has been deleted.`);
+          console.log(`Role: ${answers.deleteRole} has been deleted.`);
         }
       );
       db.query("SELECT * FROM roles", function (err, results) {
