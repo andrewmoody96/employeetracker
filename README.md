@@ -50,4 +50,4 @@ If you have any questions, please send an email to <andrew.moody96@gmail.com>, o
   #### License
   [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
   <br>
-  [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
+  [CC0 Details](https://creativecommons.org/publicdomain/zero/1.0/legalcode)
